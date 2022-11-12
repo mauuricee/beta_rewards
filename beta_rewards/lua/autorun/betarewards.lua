@@ -9,13 +9,23 @@ __________        __           __________                                .___
 
 By Maurice*/
 
-print("BetaRewards >> Chargement")
+print("BetaRewards >> Loading")
 
 if SERVER then
         Beta_Rewards = Beta_Rewards or {}
-        Beta_Rewards.Config = Beta_Rewards.Config or {}
 
         AddCSLuaFile("betarewards/sh_config.lua")
+
+        if Beta_Rewards.Config.lang == "fr" then
+                include("betarewards/lang/fr.lua")
+                AddCSLuaFile("betarewards/lang/fr.lua")
+        elseif Beta_Rewards.Config.lang == "en" then
+                include("betarewards/lang/en.lua")
+                AddCSLuaFile("betarewards/lang/en.lua")
+        else
+                print("BetaRewards >> WARNING : An error occured while charging lang. Please check that you have written a supported language!")
+        end
+
         AddCSLuaFile("betarewards/core/rewards.lua")
 
         include("betarewards/sh_config.lua")
@@ -35,10 +45,19 @@ end
 
 if CLIENT then
         Beta_Rewards = Beta_Rewards or {}
-        Beta_Rewards.Config = Beta_Rewards.Config or {}
 
         include("betarewards/sh_config.lua")
+        
+        if Beta_Rewards.Config.lang == "fr" then
+                include("betarewards/lang/fr.lua")
+        elseif Beta_Rewards.Config.lang == "en" then
+                include("betarewards/lang/en.lua")
+        else
+                return
+        end
+
         include("betarewards/core/rewards.lua")
+
 end
 
-print("BetaRewards >> Chargement terminé")
+print("BetaRewards >> Successfully loaded!")

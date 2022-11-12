@@ -2,39 +2,35 @@ require("mysqloo") -- Ignorez cette ligne
 
 local mysqlDB
 
-if Beta_Rewards.Config.UseMySQLOO then
-    local success, err = pcall(function()
-        require("mysqloo")
-    end)
+local success, err = pcall(function()
+    require("mysqloo")
+end)
 
-    if not success then return print("BetaRewards >> Une erreur est survenue avec MySQLOO") end
-    if not mysqloo then return print("BetaRewards >> Impossible de trouver MySQLOO :\n" .. requireError) end
+if not success then return print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] ) end
+if not mysqloo then return print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. "\n" .. requireError ) end
 
-    mysqlDB = mysqloo.connect(Beta_Rewards.MySQLOOConfig["host"], Beta_Rewards.MySQLOOConfig["username"], Beta_Rewards.MySQLOOConfig["password"], Beta_Rewards.MySQLOOConfig["database"], {
-        ["port"] = Beta_Rewards.MySQLOOConfig["port"]
-    })
+mysqlDB = mysqloo.connect(Beta_Rewards.MySQLOOConfig["host"], Beta_Rewards.MySQLOOConfig["username"], Beta_Rewards.MySQLOOConfig["password"], Beta_Rewards.MySQLOOConfig["database"], {["port"] = Beta_Rewards.MySQLOOConfig["port"]})
 
-    function mysqlDB:onConnected()
-        print("BetaRewards >> Connexion avec la base de données établie avec succès !")
-        BRWDB = true
-    end
-
-    function mysqlDB:onConnectionFailed(connectionError)
-        print("BetaRewards >> Impossible de se connecter à la BDD externe :\n" .. connectionError)
-    end
-
-    mysqlDB:connect()
+function mysqlDB:onConnected()
+    print("BetaRewards >> " .. Beta_Rewards.lang["DBConnected"] )
+    BRWDB = true
 end
+
+function mysqlDB:onConnectionFailed(e)
+    print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. "\n" .. e)
+end
+
+mysqlDB:connect()
 
 function CreateTable()
     local querycreate = databaseObject:query("CREATE TABLE IF NOT EXISTS betatesters(id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,sid VARCHAR(60),nick VARCHAR(255),recomp INT);")
 
     querycreate.onSuccess = function(q)
-        print("BetaRewards >> Base de données initialisée !")
+        print("BetaRewards >> " .. Beta_Rewards.lang["DBInit"] )
     end
 
     querycreate.onError = function(q, e)
-        print("BetaRewards >> Une erreur est survenue : " .. e .. ".")
+        print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. "\n" .. e )
     end
 
     querycreate:start()
@@ -50,17 +46,17 @@ function FirstJoinMySQLOO(ply)
             local query2 = databaseObject:query("INSERT INTO betatesters(sid, nick, recomp) VALUES ('" .. ply:SteamID() .. "', '" .. ply:Nick() .. "', 0)")
 
             query2.onSuccess = function(q)
-                print("BetaRewards >> Enregistrement du joueur effectué avec succès !")
+                print("BetaRewards >> " .. Beta_Rewards.lang["PlyReg"] )
             end
 
-            query2.onError = function(q, e)
-                print("BetaRewards >> Une erreur est survenue pendant l'enregistrement :\n" .. e)
+            query2.onError = function(e)
+                print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. "\n" .. e )
             end
 
             query2:start()
         else
             if not Beta_Rewards.Config.RedeemMode then
-                print("BetaRewards >> Joueur déjà enregistré sur la base de données")
+                print("BetaRewards >> " .. Beta_Rewards.lang["PlyAlreadyReg"] )
             else
                 RewardPlayer(ply)
             end
@@ -68,7 +64,7 @@ function FirstJoinMySQLOO(ply)
     end
 
     query1.onError = function(q, e)
-        print("BetaRewards >> Une erreur est survenue pendant la vérification du joueur dans la base :\n" .. e)
+        print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. "\n" .. e )
     end
 
     query1:start()

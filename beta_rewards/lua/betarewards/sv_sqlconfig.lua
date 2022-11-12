@@ -1,4 +1,4 @@
--- Modifiez impérativement ces lignes si vous avez activé le stockage via MySQLOO
+-- Put your credentials so it connects to the DB
 Beta_Rewards.MySQLOOConfig = {
     ["host"] = "",
     ["port"] = 3306,
