@@ -1,3 +1,3 @@
 function RewardPlayer( ply )
-    print("Récomp")
+    -- To do
 end
