@@ -13,6 +13,7 @@ print("BetaRewards >> Loading")
 
 if SERVER then
         Beta_Rewards = Beta_Rewards or {}
+        Beta_Rewards.Config = Beta_Rewards.Config or {}
 
         AddCSLuaFile("betarewards/sh_config.lua")
 
@@ -45,6 +46,7 @@ end
 
 if CLIENT then
         Beta_Rewards = Beta_Rewards or {}
+        Beta_Rewards.Config = Beta_Rewards.Config or {}
 
         include("betarewards/sh_config.lua")
         
