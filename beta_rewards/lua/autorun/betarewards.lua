@@ -17,10 +17,10 @@ if SERVER then
 
         AddCSLuaFile("betarewards/sh_config.lua")
 
-        if Beta_Rewards.Config.lang == "fr" then
+        if Beta_Rewards.Config.Lang == "fr" then
                 include("betarewards/lang/fr.lua")
                 AddCSLuaFile("betarewards/lang/fr.lua")
-        elseif Beta_Rewards.Config.lang == "en" then
+        elseif Beta_Rewards.Config.Lang == "en" then
                 include("betarewards/lang/en.lua")
                 AddCSLuaFile("betarewards/lang/en.lua")
         else
@@ -50,9 +50,9 @@ if CLIENT then
 
         include("betarewards/sh_config.lua")
         
-        if Beta_Rewards.Config.lang == "fr" then
+        if Beta_Rewards.Config.Lang == "fr" then
                 include("betarewards/lang/fr.lua")
-        elseif Beta_Rewards.Config.lang == "en" then
+        elseif Beta_Rewards.Config.Lang == "en" then
                 include("betarewards/lang/en.lua")
         else
                 return
