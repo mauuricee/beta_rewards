@@ -13,7 +13,7 @@ function FirstJoinSQLITE(ply)
 
     if qdata == false then
         print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. sql.LastError() )
-    elseif qdata == nil then
+    elseif qdata == nil and !Beta_Rewards.Config.RedeemMode then
         sql.Query("INSERT INTO betatesters(sid, nick, recomp) VALUES ('" .. ply:SteamID() .. "', '" .. ply:Nick() .. "', 0)")
         print("BetaRewards >> " .. Beta_Rewards.lang["PlyReg"] )
     else
