@@ -1,3 +1,4 @@
 function RewardPlayer( ply )
-    -- To do
+    DrawRewardPanel(ply)
+    UpdateRewardStatus(ply)
 end

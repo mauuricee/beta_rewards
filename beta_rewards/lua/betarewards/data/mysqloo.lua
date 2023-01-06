@@ -25,11 +25,11 @@ mysqlDB:connect()
 function CreateTable()
     local querycreate = databaseObject:query("CREATE TABLE IF NOT EXISTS betatesters(id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,sid VARCHAR(60),nick VARCHAR(255),recomp INT);")
 
-    querycreate.onSuccess = function(q)
+    querycreate.onSuccess = function()
         print("BetaRewards >> " .. Beta_Rewards.lang["DBInit"] )
     end
 
-    querycreate.onError = function(q, e)
+    querycreate.onError = function(e)
         print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. "\n" .. e )
     end
 
@@ -63,7 +63,7 @@ function FirstJoinMySQLOO(ply)
         end
     end
 
-    query1.onError = function(q, e)
+    query1.onError = function(e)
         print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. "\n" .. e )
     end
 

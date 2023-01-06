@@ -1,20 +1,20 @@
 if not SERVER then return end
 
 if not sql.TableExists("betatesters") then
-    print(sql.Query("CREATE TABLE IF NOT EXISTS betatesters (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, sid VARCHAR(60), nick VARCHAR(255), recomp INT );"))
+    sql.Query("CREATE TABLE IF NOT EXISTS betatesters (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, sid VARCHAR(60), nick VARCHAR(255), reward INT );")
     print("BetaRewards >> " .. Beta_Rewards.lang["DBInit"] )
 else
     print("BetaRewards >> " .. Beta_Rewards.lang["DBInit"] )
 end   
 
 
-function FirstJoinSQLITE(ply)
+function OnJoinSQLITE(ply)
     local qdata = sql.QueryRow("SELECT * FROM betatesters WHERE sid = '" .. ply:SteamID() .. "'")
 
     if qdata == false then
         print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. sql.LastError() )
     elseif qdata == nil then
-        sql.Query("INSERT INTO betatesters(sid, nick, recomp) VALUES ('" .. ply:SteamID() .. "', '" .. ply:Nick() .. "', 0)")
+        sql.Query("INSERT INTO betatesters(sid, nick, reward) VALUES ('" .. ply:SteamID() .. "', '" .. ply:Nick() .. "', 0)")
         print("BetaRewards >> " .. Beta_Rewards.lang["PlyReg"] )
     else
         local state = qdata[4]
@@ -29,5 +29,9 @@ function FirstJoinSQLITE(ply)
         end
     end
 end
+hook.Add( "PlayerInitialSpawn", "BetaRewardsSQLITEInit", OnJoinSQLITE )
 
-hook.Add( "PlayerInitialSpawn", "BetaRewardsSQLITEInit", FirstJoinSQLITE )
+function UpdateRewardStatus(ply)
+    sql.Query("UPDATE betatesters SET reward = 1 WHERE sid = '" .. ply:SteamID() .. "'")
+    print("BetaRewards >> " .. Beta_Rewards.lang["PlyUpdated"] )
+end
