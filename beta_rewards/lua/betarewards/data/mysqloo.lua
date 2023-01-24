@@ -1,4 +1,4 @@
-require("mysqloo") -- Ignorez cette ligne
+require("mysqloo") -- Ignore this line
 
 local mysqlDB
 
@@ -16,7 +16,7 @@ function mysqlDB:onConnected()
     BRWDB = true
 end
 
-function mysqlDB:onConnectionFailed(e)
+function mysqlDB:onConnectionFailed(err)
     print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. "\n" .. e)
 end
 
@@ -29,7 +29,7 @@ function CreateTable()
         print("BetaRewards >> " .. Beta_Rewards.lang["DBInit"] )
     end
 
-    querycreate.onError = function(e)
+    querycreate.onError = function(err)
         print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. "\n" .. e )
     end
 
@@ -49,7 +49,7 @@ function FirstJoinMySQLOO(ply)
                 print("BetaRewards >> " .. Beta_Rewards.lang["PlyReg"] )
             end
 
-            query2.onError = function(e)
+            query2.onError = function(err)
                 print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. "\n" .. e )
             end
 
@@ -63,7 +63,7 @@ function FirstJoinMySQLOO(ply)
         end
     end
 
-    query1.onError = function(e)
+    query1.onError = function(err)
         print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. "\n" .. e )
     end
 
