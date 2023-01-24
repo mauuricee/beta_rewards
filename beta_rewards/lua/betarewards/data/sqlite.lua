@@ -13,13 +13,8 @@ function OnJoinSQLITE(ply)
 
     if qdata == false then
         print("BetaRewards >> " .. Beta_Rewards.lang["DBError"] .. sql.LastError() )
-<<<<<<< HEAD
-    elseif qdata == nil then
-        sql.Query("INSERT INTO betatesters(sid, nick, reward) VALUES ('" .. ply:SteamID() .. "', '" .. ply:Nick() .. "', 0)")
-=======
     elseif qdata == nil and !Beta_Rewards.Config.RedeemMode then
         sql.Query("INSERT INTO betatesters(sid, nick, recomp) VALUES ('" .. ply:SteamID() .. "', '" .. ply:Nick() .. "', 0)")
->>>>>>> da7dc1a3efaf2a641bb6bb55df46d180531f78e7
         print("BetaRewards >> " .. Beta_Rewards.lang["PlyReg"] )
     else
         local state = qdata[4]
@@ -36,11 +31,7 @@ function OnJoinSQLITE(ply)
 end
 hook.Add( "PlayerInitialSpawn", "BetaRewardsSQLITEInit", OnJoinSQLITE )
 
-<<<<<<< HEAD
 function UpdateRewardStatus(ply)
     sql.Query("UPDATE betatesters SET reward = 1 WHERE sid = '" .. ply:SteamID() .. "'")
     print("BetaRewards >> " .. Beta_Rewards.lang["PlyUpdated"] )
 end
-=======
-hook.Add( "PlayerInitialSpawn", "BetaRewardsSQLITEInit", FirstJoinSQLITE )
->>>>>>> da7dc1a3efaf2a641bb6bb55df46d180531f78e7
