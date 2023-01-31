@@ -39,6 +39,7 @@ end
 CreateTable()
 
 function FirstJoinMySQLOO(ply)
+    if ply:IsBot() then return end
     local query1 = databaseObject:query("SELECT * FROM betatesters WHERE sid = '" .. ply:SteamID() .. "'")
 
     query1.onSuccess = function(q)

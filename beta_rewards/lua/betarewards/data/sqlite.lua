@@ -9,6 +9,7 @@ end
 
 
 function OnJoinSQLITE(ply)
+    if ply:IsBot() then return end
     local qdata = sql.QueryRow("SELECT * FROM betatesters WHERE sid = '" .. ply:SteamID() .. "'")
 
     if qdata == false then
