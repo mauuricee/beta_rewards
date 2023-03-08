@@ -23,7 +23,7 @@ end
 mysqlDB:connect()
 
 function CreateTable()
-    local querycreate = databaseObject:query("CREATE TABLE IF NOT EXISTS betatesters(id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,sid VARCHAR(60),nick VARCHAR(255),recomp INT);")
+    local querycreate = mysqlDB:query("CREATE TABLE IF NOT EXISTS betatesters(id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,sid VARCHAR(60),nick VARCHAR(255),recomp INT);")
 
     querycreate.onSuccess = function()
         print("BetaRewards >> " .. Beta_Rewards.lang["DBInit"] )
@@ -40,11 +40,11 @@ CreateTable()
 
 function FirstJoinMySQLOO(ply)
     if ply:IsBot() then return end
-    local query1 = databaseObject:query("SELECT * FROM betatesters WHERE sid = '" .. ply:SteamID() .. "'")
+    local query1 = mysqlDB:query("SELECT * FROM betatesters WHERE sid = '" .. ply:SteamID() .. "'")
 
     query1.onSuccess = function(q)
         if not checkQuery(q) and not Beta_Rewards.Config.RedeemMode then
-            local query2 = databaseObject:query("INSERT INTO betatesters(sid, nick, recomp) VALUES ('" .. ply:SteamID() .. "', '" .. ply:Nick() .. "', 0)")
+            local query2 = mysqlDB:query("INSERT INTO betatesters(sid, nick, recomp) VALUES ('" .. ply:SteamID() .. "', '" .. ply:Nick() .. "', 0)")
 
             query2.onSuccess = function(q)
                 print("BetaRewards >> " .. Beta_Rewards.lang["PlyReg"] )
