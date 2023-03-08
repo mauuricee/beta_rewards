@@ -10,6 +10,8 @@ __________        __           __________                                .___
 By Maurice*/
 
 print("BetaRewards >> Loading")
+  
+local SupportedLangs = { "fr", "en" }
 
 if SERVER then
         Beta_Rewards = Beta_Rewards or {}
@@ -20,7 +22,7 @@ if SERVER then
         include("betarewards/sh_config.lua")
         AddCSLuaFile("betarewards/sh_config.lua")
 
-        if Beta_Rewards.Config.Lang == "fr" || Beta_Rewards.Config.Lang == "en" then
+        if table.HasValue(SupportedLangs, Beta_Rewards.Config.Lang) then
                 include("betarewards/lang/" .. Beta_Rewards.Config.Lang .. ".lua")
                 AddCSLuaFile("betarewards/lang/" .. Beta_Rewards.Config.Lang .. ".lua")
         else
@@ -52,7 +54,7 @@ if CLIENT then
 
         include("betarewards/sh_config.lua")
         
-        if Beta_Rewards.Config.Lang == "fr" || Beta_Rewards.Config.Lang == "en" then
+         if table.HasValue(SupportedLangs, Beta_Rewards.Config.Lang) then
                 include("betarewards/lang/" .. Beta_Rewards.Config.Lang .. ".lua")
         else
                 print("BetaRewards >> WARNING : An error occured while charging lang. Please check that you have written a supported language!\nCharging english language...")
